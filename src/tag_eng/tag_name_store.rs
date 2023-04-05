@@ -82,7 +82,8 @@ mod tests {
 
     #[test]
     fn test_add_tag() {
-        let mut store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
+        let mut store: TagNameStore =
+            TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
         let purple: TagId = store.add_tag("purple");
         assert!(store.contains_id(purple));
     }
@@ -90,31 +91,29 @@ mod tests {
     #[test]
     fn test_get_tag_id() {
         let store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
-        assert_eq!(store.get_tag_id("yellow"),Some(2));
+        assert_eq!(store.get_tag_id("yellow"), Some(2));
         for i in 1..20 {
             match store.name_from_id(i) {
-                Some(s) => {
-                    match i {
-                        1 => {
-                            assert_eq!(s, "red");
-                        }
-                        2 => {
-                            assert_eq!(s, "yellow");
-                        }
-                        3 => {
-                            assert_eq!(s, "brown");
-                        }
-                        4 => {
-                            assert_eq!(s, "green");
-                        }
-                        5 => {
-                            assert_eq!(s, "blue");
-                        }
-                        _ => {}
+                Some(s) => match i {
+                    1 => {
+                        assert_eq!(s, "red");
                     }
-                }
+                    2 => {
+                        assert_eq!(s, "yellow");
+                    }
+                    3 => {
+                        assert_eq!(s, "brown");
+                    }
+                    4 => {
+                        assert_eq!(s, "green");
+                    }
+                    5 => {
+                        assert_eq!(s, "blue");
+                    }
+                    _ => {}
+                },
                 None => {
-                    assert!(i>=5);
+                    assert!(i >= 5);
                 }
             }
         }
