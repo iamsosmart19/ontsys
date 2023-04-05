@@ -77,7 +77,7 @@ mod tests {
 
     #[test]
     fn test_from() {
-        let mut store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
+        let store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
     }
 
     #[test]
@@ -89,7 +89,7 @@ mod tests {
 
     #[test]
     fn test_get_tag_id() {
-        let mut store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
+        let store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
         assert_eq!(store.get_tag_id("yellow"),Some(2));
         for i in 1..20 {
             match store.name_from_id(i) {
