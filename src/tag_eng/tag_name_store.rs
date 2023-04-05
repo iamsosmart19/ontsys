@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 use crate::tag_eng;
 
 use tag_eng::TagId;
@@ -50,7 +51,11 @@ impl TagNameStore {
         }
     }
 
-    // Finds tag in database and returns its id
+    pub fn contains_id(&self, t: TagId) -> bool {
+        self.id_lookup.contains_key(&t)
+    }
+
+    // Finds tag in database from string and returns its id
     // Returns None if tag not found
     pub fn get_tag_id(&self, name: &str) -> Option<TagId> {
         match self.str_lookup.get(&name.to_string()) {
