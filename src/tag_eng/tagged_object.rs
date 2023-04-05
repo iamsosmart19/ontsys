@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 use crate::tag_eng;
 
 use tag_eng::TagId;
@@ -10,6 +9,7 @@ use std::rc::Rc;
 
 use std::collections::HashSet;
 
+#[derive(PartialEq,Debug)]
 pub enum AddTagError {
     TagNotInDatabase,
 }
@@ -79,5 +79,87 @@ impl TaggedObject {
             }
             None => (),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_from() {
+        let mut store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
+        let mut mfw: TaggedObject = TaggedObject::from(Rc::new(store), "./myface.png".to_string());
+    }
+
+    #[test]
+    fn test_add_tag_from_str() {
+        let mut store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
+        let mut mfw: TaggedObject = TaggedObject::from(Rc::new(store), "./myface.png".to_string());
+        match mfw.add_tag_from_str("blue".to_string()) {
+            Err(AddTagError::TagNotInDatabase) => {
+                println!("are you dumb")
+            }
+            _ => {}
+        }
+        assert!(mfw.has_tag_id(5));
+        assert_eq!(mfw.add_tag_from_str("rainbow".to_string()), Err(AddTagError::TagNotInDatabase));
+    }
+
+    #[test]
+    fn test_add_tag_from_id() {
+        let mut store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
+        let mut mfw: TaggedObject = TaggedObject::from(Rc::new(store), "./myface.png".to_string());
+        
+        match mfw.add_tag_from_id(6) {
+            Err(AddTagError::TagNotInDatabase) => {
+                println!("are you dumb")
+            }
+            _ => {}
+        }
+        assert!(mfw.has_tag_id(6));
+        assert_eq!(mfw.add_tag_from_id(100),Err(AddTagError::TagNotInDatabase));
+    }
+
+    #[test]
+    fn test_rm_tag_id() {
+        let mut store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
+        let mut mfw: TaggedObject = TaggedObject::from(Rc::new(store), "./myface.png".to_string());
+        match mfw.add_tag_from_str("blue".to_string()) {
+            Err(AddTagError::TagNotInDatabase) => {
+                println!("are you dumb")
+            }
+            _ => {}
+        }
+        match mfw.add_tag_from_str("black".to_string()) {
+            Err(AddTagError::TagNotInDatabase) => {
+                println!("are you dumb")
+            }
+            _ => {}
+        }
+        mfw.rm_tag_id(5);
+        mfw.rm_tag_id(6);
+        assert!(!mfw.has_tag_id(6) && !mfw.has_tag_id(5));
+    }
+
+    #[test]
+    fn test_rm_tag_str() {
+        let mut store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
+        let mut mfw: TaggedObject = TaggedObject::from(Rc::new(store), "./myface.png".to_string());
+        match mfw.add_tag_from_str("blue".to_string()) {
+            Err(AddTagError::TagNotInDatabase) => {
+                println!("are you dumb")
+            }
+            _ => {}
+        }
+        match mfw.add_tag_from_str("black".to_string()) {
+            Err(AddTagError::TagNotInDatabase) => {
+                println!("are you dumb")
+            }
+            _ => {}
+        }
+        mfw.rm_tag_str("black".to_string());
+        mfw.rm_tag_str("blue".to_string());
+        assert!(!mfw.has_tag_str("black".to_string()) && !mfw.has_tag_str("blue".to_string()));
     }
 }
