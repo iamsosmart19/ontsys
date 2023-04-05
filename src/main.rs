@@ -25,7 +25,7 @@ fn main() {
                 println!("The tag with id '{i}' is {}.", t);
             }
             None => {
-                println!("The tag with id '{}' does not exist in this database",i);
+                println!("The tag with id '{}' does not exist in this database", i);
             }
         }
     }
