@@ -22,7 +22,7 @@ fn main() {
     for i in 1..20 {
         match store.name_from_id(i) {
             Some(t) => {
-                println!("The tag with id 'i' is {}.", t);
+                println!("The tag with id '{i}' is {}.", t);
             }
             None => {
                 println!("The tag with id '{}' does not exist in this database",i);
