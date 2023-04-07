@@ -9,6 +9,8 @@ use std::rc::Rc;
 
 use std::collections::HashSet;
 
+use itertools::Itertools;
+
 #[derive(PartialEq, Debug)]
 pub enum AddTagError {
     TagNotInDatabase,
@@ -80,6 +82,10 @@ impl TaggedObject {
             None => (),
         }
     }
+
+    pub fn tags_iter(&self) -> impl Iterator<Item=&TagId> + '_ {
+        self.tags.iter().sorted()
+    }
 }
 
 #[cfg(test)]
@@ -90,7 +96,7 @@ mod tests {
     fn test_from() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mfw: TaggedObject = TaggedObject::from(Rc::new(store), "./myface.png".to_string());
+        let _mfw: TaggedObject = TaggedObject::from(Rc::new(store), "./myface.png".to_string());
     }
 
     #[test]
@@ -169,5 +175,15 @@ mod tests {
         mfw.rm_tag_str("black".to_string());
         mfw.rm_tag_str("blue".to_string());
         assert!(!mfw.has_tag_str("black".to_string()) && !mfw.has_tag_str("blue".to_string()));
+    }
+
+    #[test]
+    fn test_ret_all_tags() {
+        let store: TagNameStore =
+            TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
+        let mut mfw: TaggedObject = TaggedObject::from(Rc::new(store), "./myface.png".to_string());
+        for x in mfw.tags_iter() {
+            println!("x: {x}");
+        }
     }
 }

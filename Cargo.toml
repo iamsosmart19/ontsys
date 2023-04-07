@@ -4,6 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.dev]
+opt-level = 0
+incremental = true
+lto = false
 
 [dependencies]
 actix-web = "4.3.1"
+env_logger = "0.10.0"
+log = "0.4.17"
+itertools = "0.10.5"
