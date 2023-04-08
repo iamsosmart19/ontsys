@@ -2,6 +2,7 @@ use crate::tag_eng;
 
 use tag_eng::TagId;
 
+use std::collections::hash_map::Iter;
 use std::collections::HashMap;
 
 pub struct TagNameStore {
@@ -70,8 +71,8 @@ impl TagNameStore {
         }
     }
 
-    pub fn tags_iter(&self) -> impl Iterator<Item = &TagId> + '_ {
-        self.id_lookup.keys()
+    pub fn tags_iter(&self) -> Iter<'_, TagId, String> {
+        self.id_lookup.iter()
     }
 }
 
@@ -126,8 +127,8 @@ mod tests {
     #[test]
     fn test_tags_iter() {
         let store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
-        for t in store.tags_iter() {
-            println!("{t}");
+        for (t, s) in store.tags_iter() {
+            println!("{t}: {s}");
         }
     }
 }

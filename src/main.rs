@@ -47,6 +47,7 @@ async fn main() -> std::io::Result<()> {
             .route("/addtag", web::post().to(handlers::add_tag))
             .route("/addobj", web::post().to(handlers::add_tagged_object))
             .service(web::resource("/listobj").to(handlers::list_tagged_objects))
+            .service(web::resource("/listtags").to(handlers::list_tags))
     })
     .workers(4)
     .bind(("127.0.0.1", 8080))?

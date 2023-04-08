@@ -1,4 +1,4 @@
-use std::sync::{Arc,RwLock};
+use std::sync::{Arc, RwLock};
 
 use crate::tag_eng::tag_name_store::TagNameStore;
 use crate::tag_eng::tagged_object::TaggedObject;
@@ -17,23 +17,23 @@ pub struct GetTagsInfo {
     pub tag: String,
 }
 
-#[derive(Deserialize,Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct JsonRet {
     pub tag: TagId,
 }
 
-#[derive(Deserialize,Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct AddTagInfo {
     pub tag: String,
 }
 
-#[derive(Deserialize,Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct AddTaggedObjectInfo {
     pub filepath: String,
     pub tags: Vec<TagId>,
 }
 
-#[derive(Deserialize,Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct TaggedObjectFlat {
     pub filepath: String,
     pub tags: Vec<TagId>,
@@ -59,7 +59,13 @@ impl TaggedObjectFlat {
     }
 }
 
-#[derive(Deserialize,Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct TaggedObjectsList {
     pub tobjs: Vec<TaggedObjectFlat>,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct TagList {
+    pub tlist: Vec<TagId>,
+    pub slist: Vec<String>,
 }
