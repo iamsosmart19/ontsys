@@ -56,7 +56,7 @@ impl TagNameStore {
 
     // Finds tag in database from string and returns its id
     // Returns None if tag not found
-    pub fn get_tag_id(&self, name: &str) -> Option<TagId> {
+    pub fn id_from_name(&self, name: &str) -> Option<TagId> {
         match self.str_lookup.get(&name.to_string()) {
             Some(t) => return Some(*t),
             None => None,
@@ -68,6 +68,10 @@ impl TagNameStore {
             Some(a) => Some(a.to_string()),
             None => None,
         }
+    }
+
+    pub fn tags_iter(&self) -> impl Iterator<Item = &TagId> + '_ {
+        self.id_lookup.keys()
     }
 }
 
@@ -89,9 +93,9 @@ mod tests {
     }
 
     #[test]
-    fn test_get_tag_id() {
+    fn test_id_from_name() {
         let store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
-        assert_eq!(store.get_tag_id("yellow"), Some(2));
+        assert_eq!(store.id_from_name("yellow"), Some(2));
         for i in 1..20 {
             match store.name_from_id(i) {
                 Some(s) => match i {
@@ -116,6 +120,14 @@ mod tests {
                     assert!(i >= 5);
                 }
             }
+        }
+    }
+
+    #[test]
+    fn test_tags_iter() {
+        let store: TagNameStore = TagNameStore::from(&["red", "yellow", "brown", "green", "blue"]);
+        for t in store.tags_iter() {
+            println!("{t}");
         }
     }
 }

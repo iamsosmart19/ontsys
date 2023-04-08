@@ -31,10 +31,21 @@ impl TaggedObject {
         }
     }
 
-    pub fn from(fl: String) -> Self {
+    pub fn from(tag_store: &TagNameStore, fl: String, tags:&[TagId]) -> Self {
+        let mut temp_tags: HashSet<TagId> = HashSet::new();
+        for x in tags {
+            match tag_store.contains_id(*x) {
+                true => {
+                    temp_tags.insert(*x);
+                }
+                false => {
+                    println!("{x} not in database");
+                }
+            }
+        }
         Self {
             file_loc: PathBuf::from(fl),
-            tags: HashSet::new(),
+            tags: temp_tags,
         }
     }
 
@@ -57,7 +68,7 @@ impl TaggedObject {
         tag_store: &TagNameStore,
         s: String,
     ) -> Result<(), AddTagError> {
-        match tag_store.get_tag_id(&s.to_string()) {
+        match tag_store.id_from_name(&s.to_string()) {
             Some(t) => {
                 self.tags.insert(t);
                 Ok(())
@@ -71,7 +82,7 @@ impl TaggedObject {
     }
 
     pub fn has_tag_str(&self, tag_store: &TagNameStore, s: String) -> bool {
-        match tag_store.get_tag_id(&s.to_string()) {
+        match tag_store.id_from_name(&s.to_string()) {
             Some(t) => self.tags.contains(&t),
             None => false,
         }
@@ -82,7 +93,7 @@ impl TaggedObject {
     }
 
     pub fn rm_tag_str(&mut self, tag_store: &TagNameStore, s: String) {
-        match tag_store.get_tag_id(&s.to_string()) {
+        match tag_store.id_from_name(&s.to_string()) {
             Some(t) => {
                 self.tags.remove(&t);
             }
@@ -103,14 +114,14 @@ mod tests {
     fn test_from() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let _mfw: TaggedObject = TaggedObject::from("./myface.png".to_string());
+        let _mfw: TaggedObject = TaggedObject::from(&store, "./myface.png".to_string(), &[]);;
     }
 
     #[test]
     fn test_add_tag_from_str() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("./myface.png".to_string());
+        let mut mfw: TaggedObject = TaggedObject::from(&store, "./myface.png".to_string(), &[]);;
         match mfw.add_tag_from_str(&store, "blue".to_string()) {
             Err(AddTagError::TagNotInDatabase) => {
                 println!("are you dumb")
@@ -128,7 +139,7 @@ mod tests {
     fn test_add_tag_from_id() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("./myface.png".to_string());
+        let mut mfw: TaggedObject = TaggedObject::from(&store, "./myface.png".to_string(), &[]);;
 
         match mfw.add_tag_from_id(&store, 6) {
             Err(AddTagError::TagNotInDatabase) => {
@@ -147,7 +158,7 @@ mod tests {
     fn test_rm_tag_id() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("./myface.png".to_string());
+        let mut mfw: TaggedObject = TaggedObject::from(&store, "./myface.png".to_string(), &[]);;
         match mfw.add_tag_from_str(&store, "blue".to_string()) {
             Err(AddTagError::TagNotInDatabase) => {
                 println!("are you dumb")
@@ -169,7 +180,7 @@ mod tests {
     fn test_rm_tag_str() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("./myface.png".to_string());
+        let mut mfw: TaggedObject = TaggedObject::from(&store, "./myface.png".to_string(), &[]);;
         match mfw.add_tag_from_str(&store, "blue".to_string()) {
             Err(AddTagError::TagNotInDatabase) => {
                 println!("are you dumb")
@@ -194,7 +205,7 @@ mod tests {
     fn test_ret_all_tags() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("./myface.png".to_string());
+        let mut mfw: TaggedObject = TaggedObject::from(&store, "./myface.png".to_string(), &[]);;
         for x in mfw.tags_iter() {
             println!("x: {x}");
         }
