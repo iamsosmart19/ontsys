@@ -1,19 +1,11 @@
 // use crate::tag_eng;
 mod tag_eng;
 
-use tag_eng::TagId;
-
 use tag_eng::tag_name_store::TagNameStore;
-
-use tag_eng::tagged_object::TaggedObject;
 
 mod handlers;
 
-use actix_web::{middleware, web, App, HttpRequest, HttpServer, HttpResponse, Responder, error, error::Error};
-use actix_web::http::StatusCode;
-use actix_web::http::header::ContentType;
-
-use log::{debug, error, info, log_enabled, Level};
+use actix_web::{error, middleware, web, App, HttpResponse, HttpServer};
 
 use std::sync::Arc;
 use std::sync::RwLock;
@@ -33,12 +25,11 @@ async fn main() -> std::io::Result<()> {
     });
 
     HttpServer::new(move || {
-          let json_config = web::JsonConfig::default()
+        let json_config = web::JsonConfig::default()
             .limit(4096)
             .error_handler(|err, _req| {
                 // create custom error response
-                error::InternalError::from_response(err,
-                    HttpResponse::Conflict().finish())
+                error::InternalError::from_response(err, HttpResponse::Conflict().finish())
                     // HttpResponse::BadRequest()
                     // .content_type("application/json")
                     // .body(format!(r#"{{"error":"{}"}}"#, err)),
