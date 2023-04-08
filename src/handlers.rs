@@ -79,3 +79,39 @@ pub async fn list_tags(data: web::Data<info_structs::AppState>) -> Result<impl R
         slist: slist,
     }))
 }
+
+pub async fn and_filter(
+    data: web::Data<info_structs::AppState>,
+    info: web::Json<info_structs::QueryTagList>,
+) -> Result<impl Responder, Error> {
+    let mut list: Vec<info_structs::TaggedObjectFlat> = Vec::new();
+    let tobjs = data.objects.read().unwrap();
+    for obj in tobjs.iter() {
+        let mut add: bool = true;
+        for t in &info.tags {
+            add = add && obj.has_tag_id(*t);
+        }
+        if add {
+            list.push(info_structs::TaggedObjectFlat::from(obj));
+        }
+    }
+    Ok(web::Json(info_structs::TaggedObjectsList { tobjs: list }))
+}
+
+pub async fn or_filter(
+    data: web::Data<info_structs::AppState>,
+    info: web::Json<info_structs::QueryTagList>,
+) -> Result<impl Responder, Error> {
+    let mut list: Vec<info_structs::TaggedObjectFlat> = Vec::new();
+    let tobjs = data.objects.read().unwrap();
+    for obj in tobjs.iter() {
+        let mut add: bool = false;
+        for t in &info.tags {
+            add = add || obj.has_tag_id(*t);
+        }
+        if add {
+            list.push(info_structs::TaggedObjectFlat::from(obj));
+        }
+    }
+    Ok(web::Json(info_structs::TaggedObjectsList { tobjs: list }))
+}

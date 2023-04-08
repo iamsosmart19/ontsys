@@ -69,3 +69,8 @@ pub struct TagList {
     pub tlist: Vec<TagId>,
     pub slist: Vec<String>,
 }
+
+#[derive(Deserialize, Serialize)]
+pub struct QueryTagList {
+    pub tags: Vec<TagId>,
+}

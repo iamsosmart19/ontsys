@@ -46,6 +46,8 @@ async fn main() -> std::io::Result<()> {
             .route("/jsontest", web::post().to(handlers::jsontest))
             .route("/addtag", web::post().to(handlers::add_tag))
             .route("/addobj", web::post().to(handlers::add_tagged_object))
+            .route("/andfilter", web::post().to(handlers::and_filter))
+            .route("/orfilter", web::post().to(handlers::or_filter))
             .service(web::resource("/listobj").to(handlers::list_tagged_objects))
             .service(web::resource("/listtags").to(handlers::list_tags))
     })
