@@ -5,7 +5,6 @@ use tag_eng::TagId;
 use tag_eng::tag_name_store::TagNameStore;
 
 use std::path::PathBuf;
-use std::rc::Rc;
 
 use std::collections::HashSet;
 
