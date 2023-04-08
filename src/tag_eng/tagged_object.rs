@@ -103,6 +103,10 @@ impl TaggedObject {
     pub fn tags_iter(&self) -> impl Iterator<Item = &TagId> + '_ {
         self.tags.iter().sorted()
     }
+
+    pub fn file_loc_str(&self) -> String {
+        self.file_loc.clone().into_os_string().into_string().unwrap()
+    }
 }
 
 #[cfg(test)]

@@ -27,3 +27,39 @@ pub struct AddTagInfo {
     pub tag: String,
 }
 
+#[derive(Deserialize,Serialize)]
+pub struct AddTaggedObjectInfo {
+    pub filepath: String,
+    pub tags: Vec<TagId>,
+}
+
+#[derive(Deserialize,Serialize)]
+pub struct TaggedObjectFlat {
+    pub filepath: String,
+    pub tags: Vec<TagId>,
+}
+
+impl TaggedObjectFlat {
+    pub fn new() -> Self {
+        Self {
+            filepath: String::new(),
+            tags: Vec::new(),
+        }
+    }
+
+    pub fn from(obj: &TaggedObject) -> Self {
+        let mut tag_vec: Vec<TagId> = Vec::new();
+        for t in obj.tags_iter() {
+            tag_vec.push(*t);
+        }
+        Self {
+            filepath: obj.file_loc_str(),
+            tags: tag_vec,
+        }
+    }
+}
+
+#[derive(Deserialize,Serialize)]
+pub struct TaggedObjectsList {
+    pub tobjs: Vec<TaggedObjectFlat>,
+}

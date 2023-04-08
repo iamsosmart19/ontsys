@@ -1,5 +1,7 @@
 pub mod info_structs;
 
+use crate::tag_eng::tagged_object::TaggedObject;
+
 use actix_web::{middleware, web, App, HttpRequest, HttpServer, HttpResponse, Responder, error, error::Error};
 
 pub async fn index(req: HttpRequest, data: web::Data<info_structs::AppState>) -> HttpResponse {
@@ -35,5 +37,29 @@ pub async fn add_tag(data: web::Data<info_structs::AppState>, info: web::Json<in
 
     Ok(web::Json(info_structs::JsonRet {
         tag: id,
+    }))
+}
+
+pub async fn add_tagged_object(data: web::Data<info_structs::AppState>, info: web::Json<info_structs::AddTaggedObjectInfo>) -> Result<impl Responder, Error> {
+    let tag_database = data.tag_database.read().unwrap();
+    let mut tobj = TaggedObject::from(&tag_database, info.filepath.clone(), &[]);
+    for x in &info.tags {
+        tobj.add_tag_from_id(&tag_database, *x);
+    }
+    drop(tag_database);
+    // let mut tobjs = data.objects.write().unwrap();
+    let mut tobjs = data.objects.write().unwrap();
+    tobjs.push(tobj);
+    Ok("Ok")
+}
+
+pub async fn list_tagged_objects(data: web::Data<info_structs::AppState>) -> Result<impl Responder, Error> {
+    let mut list: Vec<info_structs::TaggedObjectFlat> = Vec::new();
+    let tobjs = data.objects.read().unwrap();
+    for obj in tobjs.iter() {
+        list.push(info_structs::TaggedObjectFlat::from(obj));
+    }
+    Ok(web::Json(info_structs::TaggedObjectsList {
+        tobjs: list,
     }))
 }
