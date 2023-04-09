@@ -9,6 +9,12 @@ opt-level = 0
 incremental = true
 lto = false
 
+[profile.release]
+incremental = true
+strip = "symbols"
+lto = true
+
+
 [dependencies]
 actix-web = "4.3.1"
 env_logger = "0.10.0"
@@ -18,3 +24,4 @@ serde = { version = "1.0.159", features = ["derive"] }
 serde_json = "1"
 futures = "0.3"
 derive_more = "0.99"
+sailfish = "0.6.0"

@@ -1,20 +1,20 @@
 pub mod info_structs;
 
+mod templates;
+
 use crate::tag_eng::tagged_object::TaggedObject;
 use crate::tag_eng::TagId;
 
+use sailfish::TemplateOnce;
+
 use actix_web::{error, error::Error, web, HttpRequest, HttpResponse, Responder};
 
-pub async fn index(req: HttpRequest, data: web::Data<info_structs::AppState>) -> HttpResponse {
-    let tag_database = data.tag_database.read().unwrap();
-    println!("REQ: {req:?}");
-    let body = match tag_database.name_from_id(2) {
-        Some(s) => {
-            format!("Tag with id 2 is: {s}")
-        }
-        None => "No tag with this id exists".to_owned(),
-    };
-    HttpResponse::Ok().body(body)
+pub async fn index(req: HttpRequest) -> actix_web::Result<impl Responder> {
+    let body = templates::Home{}
+        .render_once()
+        .map_err(error::ErrorInternalServerError)?;
+
+    Ok(HttpResponse::Ok().body(body))
 }
 
 pub async fn jsontest(

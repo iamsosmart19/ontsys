@@ -1,9 +1,9 @@
 // use crate::tag_eng;
 mod tag_eng;
 
-use tag_eng::tag_name_store::TagNameStore;
-
 mod handlers;
+
+use tag_eng::tag_name_store::TagNameStore;
 
 use actix_web::{error, middleware, web, App, HttpResponse, HttpServer};
 
