@@ -114,6 +114,10 @@ impl TaggedObject {
             .into_string()
             .unwrap()
     }
+
+    pub fn get_name(&self) -> String {
+        self.name.clone()
+    }
 }
 
 #[cfg(test)]

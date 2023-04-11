@@ -43,6 +43,14 @@ pub async fn add_tagged_object(
     data: web::Data<info_structs::AppState>,
     info: web::Json<info_structs::AddTaggedObjectInfo>,
 ) -> Result<impl Responder, Error> {
+    let check_name = data.objects.read().unwrap();
+    for obj in check_name.iter() {
+        if obj.get_name() == info.name {
+            drop(check_name);
+            return Err(error::ErrorBadRequest("Tag named {info.name} already exists"))
+        }
+    }
+    drop(check_name);
     let tag_database = data.tag_database.read().unwrap();
     let mut tobj = TaggedObject::from(info.name.clone(), &tag_database, info.filepath.clone(), &[]);
     for x in &info.tags {
