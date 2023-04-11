@@ -29,6 +29,7 @@ pub struct AddTagInfo {
 
 #[derive(Deserialize, Serialize)]
 pub struct AddTaggedObjectInfo {
+    pub name: String,
     pub filepath: String,
     pub tags: Vec<TagId>,
 }

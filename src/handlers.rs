@@ -44,7 +44,7 @@ pub async fn add_tagged_object(
     info: web::Json<info_structs::AddTaggedObjectInfo>,
 ) -> Result<impl Responder, Error> {
     let tag_database = data.tag_database.read().unwrap();
-    let mut tobj = TaggedObject::from(&tag_database, info.filepath.clone(), &[]);
+    let mut tobj = TaggedObject::from(info.name.clone(), &tag_database, info.filepath.clone(), &[]);
     for x in &info.tags {
         tobj.add_tag_from_id(&tag_database, *x);
     }
