@@ -128,14 +128,14 @@ mod tests {
     fn test_from() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let _mfw: TaggedObject = TaggedObject::from("myface", &store, "./myface.png".to_string(), &[]);
+        let _mfw: TaggedObject = TaggedObject::from("myface".to_string(), &store, "./myface.png".to_string(), &[]);
     }
 
     #[test]
     fn test_add_tag_from_str() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("myface", &store, "./myface.png".to_string(), &[]);
+        let mut mfw: TaggedObject = TaggedObject::from("myface".to_string(), &store, "./myface.png".to_string(), &[]);
         match mfw.add_tag_from_str(&store, "blue".to_string()) {
             Err(AddTagError::TagNotInDatabase) => {
                 println!("are you dumb")
@@ -153,7 +153,7 @@ mod tests {
     fn test_add_tag_from_id() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("myface", &store, "./myface.png".to_string(), &[]);
+        let mut mfw: TaggedObject = TaggedObject::from("myface".to_string(), &store, "./myface.png".to_string(), &[]);
 
         match mfw.add_tag_from_id(&store, 6) {
             Err(AddTagError::TagNotInDatabase) => {
@@ -172,7 +172,7 @@ mod tests {
     fn test_rm_tag_id() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("myface", &store, "./myface.png".to_string(), &[]);
+        let mut mfw: TaggedObject = TaggedObject::from("myface".to_string(), &store, "./myface.png".to_string(), &[]);
         match mfw.add_tag_from_str(&store, "blue".to_string()) {
             Err(AddTagError::TagNotInDatabase) => {
                 println!("are you dumb")
@@ -194,7 +194,7 @@ mod tests {
     fn test_rm_tag_str() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("myface", &store, "./myface.png".to_string(), &[]);
+        let mut mfw: TaggedObject = TaggedObject::from("myface".to_string(), &store, "./myface.png".to_string(), &[]);
         match mfw.add_tag_from_str(&store, "blue".to_string()) {
             Err(AddTagError::TagNotInDatabase) => {
                 println!("are you dumb")
@@ -219,8 +219,8 @@ mod tests {
     fn test_ret_all_tags() {
         let store: TagNameStore =
             TagNameStore::from(&["red", "yellow", "brown", "green", "blue", "black"]);
-        let mut mfw: TaggedObject = TaggedObject::from("myface", &store, "./myface.png".to_string(), &[]);
-        for (x, _s) in mfw.tags_iter() {
+        let mut mfw: TaggedObject = TaggedObject::from("myface".to_string(), &store, "./myface.png".to_string(), &[]);
+        for x in mfw.tags_iter() {
             println!("x: {x}");
         }
     }
