@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<title>RiceFields | Tags</title>
+		<link rel="stylesheet" type="text/css" href="./banner.css">
+	</head>
+	<body>
+		<% include!("banner.stpl"); %>
+		<div class="tags">
+			<!-- temporary. will need more designing later. not bothered rn -->
+			<!--
+			<\% for tag in &tags { %>
+				<div><\%= tag %></div>
+			<\% } %>-->
+		</div>
+	</body>
+</html>

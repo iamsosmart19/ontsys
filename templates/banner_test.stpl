@@ -1,0 +1,9 @@
+<html>
+	<head>
+		<title>RiceFields | BannerTest</title>
+		<link rel="stylesheet" type="text/css" href="static/css/banner.css">
+	</head>
+	<body>
+		<% include!("banner.stpl"); %>
+	</body>
+</html>

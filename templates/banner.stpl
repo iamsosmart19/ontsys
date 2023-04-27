@@ -1,0 +1,24 @@
+<div class="top">
+	<div class="topnav">
+		<div class="nav-title">
+			<a href="index.html">
+				<img class="title-logo" src="static/img/logo-small-spaced.png" alt="RFLogo">
+				<h1 class="title-name" hidden=true>//RiceFields</h1>
+				<!-- To disable title-name, you need to disable its display property in CSS. hidden doesn't work alone here. -->
+			</a>
+		</div>
+		<div class="nav-items-outer">
+			<div class="nav-items-inner">
+				<a href="home.stpl">Home</a>
+				<a href="tags.stpl">Tags</a>
+				<a class="active" href="banner.stpl">Banner Test</a>
+			</div>
+		</div>
+	</div>
+	<div class="toptitle">
+		<h1 class="title">
+			<span style="color:#b8b8b8;">RiceFields: </span>
+			PageName
+		</h1>
+	</div>
+</div>

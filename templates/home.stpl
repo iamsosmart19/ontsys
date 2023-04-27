@@ -1,7 +1,6 @@
 <html>
     <head>
 		<title>RiceFields | Home</title>
-		<% include!("./header.stpl"); %>
     </head>
     <body>
 		<h1>Welcome to the rice fields</h1>
