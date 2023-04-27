@@ -45,7 +45,6 @@ async fn main() -> std::io::Result<()> {
             .service(actix_files::Files::new("/static","./static").show_files_listing())
             .service(web::resource("/").to(handlers::index))
             .service(web::resource("/tags").to(handlers::page_tags))
-            .service(web::resource("/bannertest").to(handlers::page_bannertest))
             .route("/jsontest", web::post().to(handlers::jsontest))
             .route("/addtag", web::post().to(handlers::add_tag))
             .route("/addobj", web::post().to(handlers::add_tagged_object))

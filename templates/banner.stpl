@@ -9,9 +9,9 @@
 		</div>
 		<div class="nav-items-outer">
 			<div class="nav-items-inner">
-				<a href="home.stpl">Home</a>
-				<a href="tags.stpl">Tags</a>
-				<a class="active" href="banner.stpl">Banner Test</a>
+				<a href="/">Home</a>
+				<a href="/tags">Tags</a>
+				<a class="active" href="/bannertest">Banner Test</a>
 			</div>
 		</div>
 	</div>

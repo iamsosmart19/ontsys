@@ -22,12 +22,6 @@ pub async fn page_tags(req: HttpRequest) -> actix_web::Result<impl Responder> {
         .map_err(error::ErrorInternalServerError)?;
     Ok(HttpResponse::Ok().body(body))
 }
-pub async fn page_bannertest(req: HttpRequest) -> actix_web::Result<impl Responder> {
-    let body = templates::BannerTest{}
-        .render_once()
-        .map_err(error::ErrorInternalServerError)?;
-    Ok(HttpResponse::Ok().body(body))
-}
 
 pub async fn jsontest(
     data: web::Data<info_structs::AppState>,

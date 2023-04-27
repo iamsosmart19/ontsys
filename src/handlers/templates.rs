@@ -9,8 +9,3 @@ pub struct Home {
 #[template(path = "tags.stpl")]
 pub struct Tags {
 }
-
-#[derive(TemplateOnce)]
-#[template(path = "banner_test.stpl")]
-pub struct BannerTest {
-}
