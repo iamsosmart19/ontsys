@@ -5,6 +5,7 @@ mod handlers;
 
 use tag_eng::tag_name_store::TagNameStore;
 
+use actix_files;
 use actix_web::{error, middleware, web, App, HttpResponse, HttpServer};
 
 use std::sync::Arc;
@@ -41,7 +42,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .app_data(tag_app_state.clone())
             .app_data(json_config)
-            .service(web::resource("/index.html").to(|| async { "Hello World" }))
+            .service(actix_files::Files::new("/static","./static").show_files_listing())
             .service(web::resource("/").to(handlers::index))
             .service(web::resource("/tags").to(handlers::page_tags))
             .service(web::resource("/bannertest").to(handlers::page_bannertest))

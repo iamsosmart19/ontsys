@@ -17,6 +17,7 @@ lto = true
 
 [dependencies]
 actix-web = "4.3.1"
+actix-files = "0.6.2"
 env_logger = "0.10.0"
 log = "0.4.17"
 itertools = "0.10.5"

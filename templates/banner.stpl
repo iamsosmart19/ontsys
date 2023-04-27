@@ -2,7 +2,7 @@
 	<div class="topnav">
 		<div class="nav-title">
 			<a href="index.html">
-				<img class="title-logo" src="static/img/logo-small-spaced.png" alt="RFLogo">
+				<img class="title-logo" src="/static/img/logo-small-spaced.png" alt="RFLogo">
 				<h1 class="title-name" hidden=true>//RiceFields</h1>
 				<!-- To disable title-name, you need to disable its display property in CSS. hidden doesn't work alone here. -->
 			</a>

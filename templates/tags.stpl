@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>RiceFields | Tags</title>
-		<link rel="stylesheet" type="text/css" href="./banner.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/banner.css">
 	</head>
 	<body>
 		<% include!("banner.stpl"); %>
