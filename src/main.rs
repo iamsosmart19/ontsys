@@ -42,7 +42,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .app_data(tag_app_state.clone())
             .app_data(json_config)
-            .service(actix_files::Files::new("/static","./static").show_files_listing())
+            .service(actix_files::Files::new("/static","./static"))
             .service(web::resource("/").to(handlers::index))
             .service(web::resource("/tags").to(handlers::page_tags))
             .route("/jsontest", web::post().to(handlers::jsontest))
