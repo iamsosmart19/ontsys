@@ -1,8 +1,10 @@
 <html>
     <head>
 		<title>RiceFields | Home</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/banner.css">
     </head>
     <body>
+		<% include!("banner.stpl"); %>
 		<h1>Welcome to the rice fields</h1>
     </body>
 </html>

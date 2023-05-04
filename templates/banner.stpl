@@ -9,7 +9,8 @@
 		</div>
 		<div class="nav-items-outer">
 			<div class="nav-items-inner">
-				<a href="/">Home</a>
+				<!-- need to figure out how to set active tab for different pages -->
+				<a class="active" href="/">Home</a>
 				<a href="/tags">Tags</a>
 			</div>
 		</div>
